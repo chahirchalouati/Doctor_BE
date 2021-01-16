@@ -5,7 +5,6 @@
  */
 package Doctor.Services;
 
-import Doctor.Utilities.Interfaces.AuthenticationService;
 import Doctor.Entities.AppRole;
 import Doctor.Entities.AppUser;
 import Doctor.Exceptions.EntityExceptions.EntityNotFoundException;
@@ -13,6 +12,7 @@ import Doctor.Exceptions.EntityExceptions.UserExistException;
 import Doctor.Repositories.RoleRepository;
 import Doctor.Repositories.UserRepository;
 import Doctor.Utilities.ApiResponse.JWTResponse;
+import Doctor.Utilities.Interfaces.AuthenticationService;
 import Doctor.Utilities.JwtUtils;
 import Doctor.Utilities.Requests.SignInRequest;
 import Doctor.Utilities.Requests.SignUpRequest;
@@ -34,17 +34,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
     private BCryptPasswordEncoder encoder;
 
-    public AuthenticationServiceImpl(UserRepository userRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public AuthenticationServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+            AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
@@ -60,26 +61,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new UserExistException("email already exist");
         }
         encoder = new BCryptPasswordEncoder();
+        AppRole findByRole = roleRepository.findByRole(request.getRole());
+        if (findByRole == null) {
+            throw new EntityNotFoundException("Role Not Found ");
+        }
         AppUser user = new AppUser();
         user.setFirstName(request.getFirstName().trim());
         user.setLastName(request.getLastName().trim());
         user.setEmail(request.getEmail().trim().toLowerCase());
         user.setPassword(encoder.encode(request.getPassword()));
-        AppRole findByRole = roleRepository.findByRole(request.getRole());
 
-        if (findByRole == null) {
-            throw new EntityNotFoundException("Role Not Found ");
-        }
         user.getRoles().add(findByRole);
-
-        return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
-        //return new ResponseEntity<>(HttpStatus.CREATED);
+        AppUser save = userRepository.saveAndFlush(user);
+        return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<?> signIn(SignInRequest request) {
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                request.getEmail(), request.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 

@@ -37,50 +37,59 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     ResponseEntity<?> entityNotFoundException(EntityNotFoundException enfe) {
         log.error(enfe.getLocalizedMessage(), enfe);
-        return new ResponseEntity<>(new ApiError(enfe.getMessage(), HttpStatus.NOT_FOUND, new Date()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ApiError(enfe.getMessage(), HttpStatus.NOT_FOUND, new Date()),
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     ResponseEntity<?> httpMessageNotReadableException(HttpMessageNotReadableException hmnre) {
         log.error(hmnre.getLocalizedMessage(), hmnre);
-        return new ResponseEntity<>(new ApiError(hmnre.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(hmnre.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     ResponseEntity<?> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException hrmnse) {
         log.error(hrmnse.getLocalizedMessage(), hrmnse);
-        return new ResponseEntity<>(new ApiError(hrmnse.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(hrmnse.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserExistException.class)
     ResponseEntity<?> UserExistException(UserExistException uee) {
         log.error(uee.getLocalizedMessage(), uee);
-        return new ResponseEntity<>(new ApiError(uee.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(uee.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     ResponseEntity<?> DataIntegrityViolationException(DataIntegrityViolationException dive) {
+
         log.error(dive.getLocalizedMessage(), dive);
-        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(LockedException.class)
     ResponseEntity<?> LockedException(LockedException dive) {
         log.error(dive.getLocalizedMessage(), dive);
-        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     ResponseEntity<?> BadCredentialsException(BadCredentialsException dive) {
         log.error(dive.getLocalizedMessage(), dive);
-        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     ResponseEntity<?> ConstraintViolationException(ConstraintViolationException dive) {
-        List<ErrorEntityValidation> collect = dive.getConstraintViolations()
-                .stream()
-                .map(er -> new ErrorEntityValidation(er.getPropertyPath().toString(), er.getMessage(), er.getInvalidValue().toString())).collect(Collectors.toList());
+        List<ErrorEntityValidation> collect = dive.getConstraintViolations().stream()
+                .map(er -> new ErrorEntityValidation(er.getPropertyPath().toString(), er.getMessage(),
+                        er.getInvalidValue().toString()))
+                .collect(Collectors.toList());
 
         log.error(dive.getLocalizedMessage(), dive);
         return new ResponseEntity<>(new ErrorsValidation("Invalid Fields", collect), HttpStatus.BAD_REQUEST);
@@ -89,7 +98,8 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(PasswordInvalidException.class)
     ResponseEntity<?> PasswordInvalidException(PasswordInvalidException dive) {
         log.error(dive.getLocalizedMessage(), dive);
-        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiError(dive.getMessage(), HttpStatus.BAD_REQUEST, new Date()),
+                HttpStatus.BAD_REQUEST);
     }
 
 }

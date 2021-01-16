@@ -11,6 +11,11 @@ package Doctor.Exceptions.EntityExceptions;
  */
 public class UserExistException extends RuntimeException {
 
+    /**
+    *
+    */
+    private static final long serialVersionUID = 1L;
+
     public UserExistException() {
     }
 

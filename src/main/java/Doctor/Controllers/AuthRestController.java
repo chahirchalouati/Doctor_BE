@@ -21,6 +21,11 @@ public class AuthRestController {
 
     private final AuthenticationServiceImpl authenticationServiceImpl;
 
+    /**
+     * Inject Authentication Service
+     *
+     * @param authenticationServiceImpl
+     */
     public AuthRestController(AuthenticationServiceImpl authenticationServiceImpl) {
         this.authenticationServiceImpl = authenticationServiceImpl;
     }
@@ -29,7 +34,7 @@ public class AuthRestController {
      * User Sign-In
      *
      * @param request
-     * @return ResponseEntity<?>
+     * @return JWTResponse with generated Token
      */
     @PostMapping(value = "/signin")
     public ResponseEntity<?> signIn(@RequestBody SignInRequest request) {
@@ -40,7 +45,7 @@ public class AuthRestController {
      * User Sign-Up
      *
      * @param request
-     * @return ResponseEntity<?>
+     * @return new registered User
      */
     @PostMapping(value = "/signup")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {

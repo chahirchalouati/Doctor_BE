@@ -10,7 +10,10 @@ package Doctor.Exceptions.EntityExceptions;
  * @author Chahir Chalouati
  */
 public class PasswordInvalidException extends RuntimeException {
-
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     public PasswordInvalidException() {
     }
 

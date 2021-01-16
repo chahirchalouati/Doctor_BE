@@ -33,7 +33,11 @@ public class SignUpRequest {
         if (matches) {
             return password;
         }
-        throw new PasswordInvalidException("invalid password ");
+        throw new PasswordInvalidException("\"Password must contain at least one digit [0-9].\"\n"
+                + "            + \"Password must contain at least one lowercase Latin character [a-z].\"\n"
+                + "            + \"Password must contain at least one uppercase Latin character [A-Z].\"\n"
+                + "            + \"Password must contain at least one special character like ! @ # & ( ).\"\n"
+                + "            + \"Password must contain a length of at least 8 characters and a maximum of 20 characters\"");
     }
 
 }

@@ -20,6 +20,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDetailsImpl implements UserDetails {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private final AppUser user;
 
     public UserDetailsImpl(AppUser user) {
@@ -28,11 +32,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user
-                .getRoles()
-                .stream()
-                .map(r -> new SimpleGrantedAuthority(r.getRole()))
-                .collect(Collectors.toList());
+        return user.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 
     @Override

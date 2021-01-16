@@ -5,18 +5,17 @@
  */
 package Doctor.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,30 +29,39 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "PatientDetails")
-public class PatientDetails implements Serializable {
- /**
+@Table(name = "ADDRESSES")
+public class Address implements Serializable {
+
+    /**
      *
      */
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "")
+    @Column(nullable = false)
+    private String city;
 
     @NotBlank(message = "")
     @Column(nullable = false)
-    private String taxCode;
-    @NotBlank(message = "")
-    @Column(nullable = false)
-    private String height;
-    @NotBlank(message = "")
-    @Column(nullable = false)
-    private String weight;
+    private String province;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private BloodType BloodType;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<MedicalHistory> medicalHistory;  //medical history Like his permenent desease
-    private String numberPhone;
+    @NotBlank(message = "")
+    @Column(nullable = false)
+    private String avenue;
+
+    @NotBlank(message = "")
+    @Column(nullable = false)
+    private String buildingNumber;
+
+    @NotBlank(message = "")
+    @Column(nullable = false)
+    private String roomNumber;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdAt;
 
 }

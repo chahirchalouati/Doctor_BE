@@ -6,7 +6,6 @@
 package Doctor.Security;
 
 import Doctor.Entities.AppUser;
-import Doctor.Exceptions.EntityExceptions.EntityNotFoundException;
 import Doctor.Repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         AppUser user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new EntityNotFoundException("");
+            throw new UsernameNotFoundException("User Not Found");
         }
         return new UserDetailsImpl(user);
 
