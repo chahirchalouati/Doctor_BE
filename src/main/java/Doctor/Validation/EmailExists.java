@@ -21,13 +21,9 @@ import javax.validation.Payload;
 @Constraint(validatedBy = PasswordValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PasswordConstraint {
+public @interface EmailExists {
 
-    String message() default "Password should contain"
-            + " at least eight characters,"
-            + " at least one letter, "
-            + "one number and "
-            + "one special character";
+    String message() default "E-mail Already exists";
 
     Class<?>[] groups() default {};
 

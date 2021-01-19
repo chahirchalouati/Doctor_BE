@@ -6,6 +6,7 @@
 package Doctor.Controllers;
 
 import Doctor.Repositories.BloodTypeRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/bloodTypes")
+@AllArgsConstructor
 public class BloodTypeRestController {
 
     private final BloodTypeRepository bloodTypeRepository;
-
-    public BloodTypeRestController(BloodTypeRepository bloodTypeRepository) {
-        this.bloodTypeRepository = bloodTypeRepository;
-    }
 
     /**
      *

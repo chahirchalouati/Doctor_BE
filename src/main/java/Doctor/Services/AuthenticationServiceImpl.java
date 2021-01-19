@@ -7,8 +7,6 @@ package Doctor.Services;
 
 import Doctor.Entities.AppRole;
 import Doctor.Entities.AppUser;
-import Doctor.Exceptions.EntityExceptions.EntityNotFoundException;
-import Doctor.Exceptions.EntityExceptions.UserExistException;
 import Doctor.Repositories.RoleRepository;
 import Doctor.Repositories.UserRepository;
 import Doctor.Utilities.ApiResponse.JWTResponse;
@@ -32,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chahir Chalouati
  */
 @Service
+
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
@@ -53,22 +52,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-    @Transactional
     @Override
+    @Transactional
     public ResponseEntity<?> signUp(SignUpRequest request) {
 
-        if (userRepository.existsAppUserByEmail(request.getEmail())) {
-            throw new UserExistException("email already exist");
-        }
         encoder = new BCryptPasswordEncoder();
+        //find role
         AppRole findByRole = roleRepository.findByRole(request.getRole());
-        if (findByRole == null) {
-            throw new EntityNotFoundException("Role Not Found ");
-        }
+
+        //create user
         AppUser user = new AppUser();
         user.setFirstName(request.getFirstName().trim());
         user.setLastName(request.getLastName().trim());
-        user.setEmail(request.getEmail().trim().toLowerCase());
+        user.setEmail(request.getEmail().trim());
         user.setPassword(encoder.encode(request.getPassword()));
 
         user.getRoles().add(findByRole);

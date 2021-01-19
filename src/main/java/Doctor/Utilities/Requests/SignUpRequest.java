@@ -5,11 +5,13 @@
  */
 package Doctor.Utilities.Requests;
 
-import Doctor.Exceptions.EntityExceptions.PasswordInvalidException;
-import lombok.AccessLevel;
+import Doctor.Validation.EmailExists;
+import Doctor.Validation.PasswordConstraint;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -19,25 +21,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Valid
 public class SignUpRequest {
 
+    @NotBlank(message = "First name can't be blank")
     private String firstName;
+    @NotBlank(message = "Last name can't be blank")
     private String lastName;
+    @Email(message = "Invalid e-mail address")
+    @EmailExists
     private String email;
-    @Getter(AccessLevel.NONE)
+    @PasswordConstraint
     private String password;
+    @NotBlank(message = "Role can't be blank")
     private String role;
-
-    public String getPassword() {
-        boolean matches = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$");
-        if (matches) {
-            return password;
-        }
-        throw new PasswordInvalidException("\"Password must contain at least one digit [0-9].\"\n"
-                + "            + \"Password must contain at least one lowercase Latin character [a-z].\"\n"
-                + "            + \"Password must contain at least one uppercase Latin character [A-Z].\"\n"
-                + "            + \"Password must contain at least one special character like ! @ # & ( ).\"\n"
-                + "            + \"Password must contain a length of at least 8 characters and a maximum of 20 characters\"");
-    }
 
 }

@@ -24,7 +24,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +38,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "USERS")
 public class AppUser implements Serializable {
+
     /**
      *
      */
@@ -57,15 +57,13 @@ public class AppUser implements Serializable {
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Password must contain at least one digit [0-9]"
-            + "Password must contain at least one lowercase Latin character [a-z]."
-            + "Password must contain at least one uppercase Latin character [A-Z]."
-            + "Password must contain at least one special character like ! @ # & ( )."
-            + "Password must contain a length of at least 8 characters and a maximum of 20 characters")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppRole> roles = new ArrayList<>();
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean isNew = true;
 
     @JsonIgnore
     @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
@@ -83,5 +81,10 @@ public class AppUser implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private Date createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    private Date modifiedAt;
 
 }

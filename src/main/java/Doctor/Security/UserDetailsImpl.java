@@ -8,6 +8,7 @@ package Doctor.Security;
 import Doctor.Entities.AppUser;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,17 +19,13 @@ import org.springframework.stereotype.Component;
  * @author Chahir Chalouati
  */
 @Component
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
     private final AppUser user;
-
-    public UserDetailsImpl(AppUser user) {
-        this.user = user;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

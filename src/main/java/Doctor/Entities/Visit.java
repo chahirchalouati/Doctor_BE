@@ -42,7 +42,7 @@ public class Visit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
-    private AppUser doctor;
+    private AppUser Doctor;
     @ManyToOne(fetch = FetchType.EAGER)
     private AppUser patient;
     @Temporal(TemporalType.DATE)

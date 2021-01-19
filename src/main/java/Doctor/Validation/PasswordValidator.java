@@ -22,7 +22,8 @@ public class PasswordValidator implements
     @Override
     public boolean isValid(String password,
             ConstraintValidatorContext cxt) {
-        return password != null && password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$");
+
+        return password.matches("/(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$/i");
     }
 
 }

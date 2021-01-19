@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Doctor.Services;
-
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+package Doctor.Utilities.Projections;
 
 /**
  *
  * @author Chahir Chalouati
  */
-@Service
-@AllArgsConstructor
-public class VisitService {
+public interface DoctorProfilePro {
 
 }

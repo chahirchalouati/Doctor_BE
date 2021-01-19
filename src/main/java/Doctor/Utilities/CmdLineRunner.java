@@ -21,9 +21,10 @@ import org.springframework.stereotype.Component;
  * @author Chahir Chalouati
  */
 @Component
+
 public class CmdLineRunner implements CommandLineRunner {
 
-    String[] roles = {"USER", "ADMIN", "DOCTOR"};//Roles
+    String[] roles = {"USER", "ADMIN", "Doctor"};//Roles
     String[] bloodTypes = {"A+", "A-", "B+", "B-", "O+", "AB+", "AB-"};//BloodTypes
 
     private final RoleRepository roleRepository;

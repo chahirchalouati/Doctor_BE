@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Chahir Chalouati
  */
 @RestController
-@RequestMapping("/doctorDetails")
+@RequestMapping("/DoctorDetails")
 public class DoctorDetailsRestController {
 
     @GetMapping()

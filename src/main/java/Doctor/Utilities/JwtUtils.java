@@ -19,6 +19,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import java.util.Date;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -29,25 +30,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
+@AllArgsConstructor
 public class JwtUtils {
 
     private final UserRepository userRepository;
-
-    public JwtUtils(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
         AppUser user = userRepository.findByEmail(userPrincipal.getUsername());
         return Jwts.builder()
-                .setIssuer("www.doctor.com")
+                .setIssuer("www.Doctor.com")
                 .setSubject(user.getEmail().trim().toLowerCase())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())
                 .claim("email", user.getEmail())
-                .claim("role", user.getRoles().stream().map(role -> role.getRole()).collect(Collectors.toList()))
+                .claim("isNew", user.isNew())
+                .claim("roles", user.getRoles().stream().map(role -> role.getRole()).collect(Collectors.toList()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)

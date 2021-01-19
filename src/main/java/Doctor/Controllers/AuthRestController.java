@@ -3,6 +3,7 @@ package Doctor.Controllers;
 import Doctor.Services.AuthenticationServiceImpl;
 import Doctor.Utilities.Requests.SignInRequest;
 import Doctor.Utilities.Requests.SignUpRequest;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,18 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auths")
 @Slf4j
+@AllArgsConstructor
 public class AuthRestController {
 
     private final AuthenticationServiceImpl authenticationServiceImpl;
-
-    /**
-     * Inject Authentication Service
-     *
-     * @param authenticationServiceImpl
-     */
-    public AuthRestController(AuthenticationServiceImpl authenticationServiceImpl) {
-        this.authenticationServiceImpl = authenticationServiceImpl;
-    }
 
     /**
      * User Sign-In
@@ -38,6 +31,8 @@ public class AuthRestController {
      */
     @PostMapping(value = "/signin")
     public ResponseEntity<?> signIn(@RequestBody SignInRequest request) {
+
+        System.out.println(request.toString());
         return authenticationServiceImpl.signIn(request);
     }
 
@@ -49,6 +44,9 @@ public class AuthRestController {
      */
     @PostMapping(value = "/signup")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {
+
+        System.out.println(request.toString());
+
         return authenticationServiceImpl.signUp(request);
     }
 }

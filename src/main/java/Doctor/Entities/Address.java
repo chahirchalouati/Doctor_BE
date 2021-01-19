@@ -59,6 +59,10 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String roomNumber;
 
+    @NotBlank(message = "")
+    @Column(nullable = false)
+    private String CAP;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

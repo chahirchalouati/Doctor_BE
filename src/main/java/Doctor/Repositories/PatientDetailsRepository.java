@@ -6,6 +6,7 @@
 package Doctor.Repositories;
 
 import Doctor.Entities.PatientDetails;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Chahir Chalouati
  */
 public interface PatientDetailsRepository extends JpaRepository<PatientDetails, Long> {
+
+    public List<PatientDetails> findByPatient_id(Long id);
+
+    public List<PatientDetails> findByPatient_idOrderByCreatedAtDesc(Long id);
 
 }

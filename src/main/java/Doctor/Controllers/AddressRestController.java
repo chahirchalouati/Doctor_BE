@@ -8,6 +8,7 @@ package Doctor.Controllers;
 import Doctor.Entities.Address;
 import Doctor.Repositories.AddressRepository;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/addresses")
+@AllArgsConstructor
 public class AddressRestController {
 
     private final AddressRepository addressRepository;
-
-    public AddressRestController(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
-    }
 
     /**
      * Get Addresses by City or province or avenue
