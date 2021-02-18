@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author Chahir Chalouati
  */
-@SpringBootApplication(proxyBeanMethods = false)
+@SpringBootApplication()
 public class DoctorApplication {
 
     public static void main(String[] args) {

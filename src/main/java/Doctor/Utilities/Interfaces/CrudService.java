@@ -12,11 +12,11 @@ package Doctor.Utilities.Interfaces;
  * @param <B>
  * @param <C>
  */
-public interface CrudService<A, B, C> {
+public interface CrudService<Payload, ID, Response> {
 
-    C create(A a);
+    Response create(Payload payload);
 
-    C delete(B b);
+    Response delete(ID id);
 
-    C update(A a, B b);
+    Response update(Payload payload, ID id);
 }

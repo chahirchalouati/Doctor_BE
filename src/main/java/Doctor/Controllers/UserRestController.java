@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class UserRestController {
 
-    private final UserService userService;
+    private UserService userService;
 
     /**
      * Create new user

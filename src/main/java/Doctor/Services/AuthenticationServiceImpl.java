@@ -90,4 +90,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
+    public ResponseEntity<?> getUserProfile(String email) {
+        AppUser findByEmail = userRepository.findByEmail(email.trim().toLowerCase());
+        return ResponseEntity.ok(findByEmail);
+    }
+
 }

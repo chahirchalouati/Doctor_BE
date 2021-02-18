@@ -36,13 +36,14 @@ public class ProfileService {
      * find Patient Profile details
      *
      * @param principal
+     * @param email
      * @return patient profile Projection with AppUser and Patient details
      */
     @Transactional
     public ResponseEntity<?> findPatientProfile(Principal principal, String email) {
 
         AppUser user = userRepository.findByEmail(principal.getName());
-        patientProfilePro.setAppUser(user);
+        patientProfilePro.setUser(user);
         patientProfilePro.setPatientDetails(// find lastest patient details
                 patientDetailsRepository.findByPatient_idOrderByCreatedAtDesc(user.getId())
                         .stream()

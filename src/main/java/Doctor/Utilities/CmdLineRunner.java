@@ -21,11 +21,7 @@ import org.springframework.stereotype.Component;
  * @author Chahir Chalouati
  */
 @Component
-
 public class CmdLineRunner implements CommandLineRunner {
-
-    String[] roles = {"USER", "ADMIN", "Doctor"};//Roles
-    String[] bloodTypes = {"A+", "A-", "B+", "B-", "O+", "AB+", "AB-"};//BloodTypes
 
     private final RoleRepository roleRepository;
     private final BloodTypeRepository bloodTypeRepository;
@@ -37,24 +33,23 @@ public class CmdLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
+        if (roleRepository.count() <= 0 && bloodTypeRepository.count() <= 0) {
+            //add roles
+            List<AppRole> collectRoles = Arrays.asList(new String[]{"USER", "ADMIN", "Doctor"})
+                    .stream()
+                    .map(r -> new AppRole(null, r, new Date()))
+                    .collect(Collectors.toList());
 
-        roleRepository.deleteAll();
+            roleRepository.saveAll(collectRoles);
+            //add bloodType
+            List<BloodType> collectBloodTypes = Arrays.asList(new String[]{"A+", "A-", "B+", "B-", "O+", "AB+", "AB-"})
+                    .stream()
+                    .map(r -> new BloodType(null, r, new Date()))
+                    .collect(Collectors.toList());
 
-        bloodTypeRepository.deleteAll();
-        //add roles
-        List<AppRole> collectRoles = Arrays.asList(roles)
-                .stream()
-                .map(r -> new AppRole(null, r, new Date()))
-                .collect(Collectors.toList());
+            bloodTypeRepository.saveAll(collectBloodTypes);
+        }
 
-        roleRepository.saveAll(collectRoles);
-        //add bloodType
-        List<BloodType> collectBloodTypes = Arrays.asList(bloodTypes)
-                .stream()
-                .map(r -> new BloodType(null, r, new Date()))
-                .collect(Collectors.toList());
-
-        bloodTypeRepository.saveAll(collectBloodTypes);
     }
 
 }

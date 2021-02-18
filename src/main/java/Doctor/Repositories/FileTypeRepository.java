@@ -5,15 +5,15 @@
  */
 package Doctor.Repositories;
 
-import Doctor.Entities.BloodType;
+import Doctor.Entities.FileType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Chahir Chalouati
  */
-public interface BloodTypeRepository extends JpaRepository<BloodType, Integer> {
+public interface FileTypeRepository extends JpaRepository<FileType, Integer> {
 
-    public BloodType findByType(String type);
+    public FileType findByType(String type);
 
 }

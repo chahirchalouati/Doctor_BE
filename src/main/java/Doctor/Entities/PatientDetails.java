@@ -8,8 +8,9 @@ package Doctor.Entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,10 +24,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -49,22 +50,17 @@ public class PatientDetails implements Serializable {
 
     @NotBlank(message = "")
     @Column(nullable = false)
-    private Double avatarUrl;
+    private String avatarUrl;
 
-    @NotBlank(message = "")
-    @Column(nullable = false)
     private Double height;
 
-    @NotBlank(message = "")
-    @Column(nullable = false)
     private Double weight;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date birthdate;
 
-    @NotBlank(message = "")
+    @NotNull(message = "")
     @Column(nullable = false)
     private Character gender;
 
@@ -76,7 +72,7 @@ public class PatientDetails implements Serializable {
     @Column(nullable = false)
     private String numberPhone;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     @JsonProperty(required = false)
@@ -84,11 +80,11 @@ public class PatientDetails implements Serializable {
     private AppUser patient;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private BloodType BloodType;
+    private BloodType bloodType;
 
     @JsonProperty(required = false)
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<MedicalHistory> medicalHistory;  //medical history Like his permenent desease
+    private List<MedicalHistory> medicalHistory = new ArrayList<>();  //medical history Like his permenent desease
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)

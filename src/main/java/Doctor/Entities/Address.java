@@ -51,17 +51,11 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String avenue;
 
-    @NotBlank(message = "")
     @Column(nullable = false)
-    private String buildingNumber;
+    private Integer building;
 
-    @NotBlank(message = "")
     @Column(nullable = false)
-    private String roomNumber;
-
-    @NotBlank(message = "")
-    @Column(nullable = false)
-    private String CAP;
+    private Integer CAP;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)

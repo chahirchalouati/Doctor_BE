@@ -27,27 +27,54 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    /**
+     *
+     * @param user
+     * @param role
+     * @return
+     */
     public ResponseEntity create(AppUser user, String role) {
         user.getRoles().add(roleRepository.findByRole(role));
         AppUser save = userRepository.save(user);
         return new ResponseEntity(save, HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ResponseEntity delete(Long id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     *
+     * @param user
+     * @param id
+     * @return
+     */
     public ResponseEntity update(AppUser user, Long id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     *
+     * @return
+     */
     public ResponseEntity<?> findAll() {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
 
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     public ResponseEntity<?> getUserProfile(String email) {
         AppUser findResult = userRepository.findByEmail(email);
+        findResult.setAvatarUrl("http://localhost:8080/".concat("/files/ValerieRockfeller@mail.com/ad73a085-7ba3-456d-a797-294c29b39005.jpg"));
         if (findResult == null) {
             throw new UsernameNotFoundException("User Not Found ");
         }

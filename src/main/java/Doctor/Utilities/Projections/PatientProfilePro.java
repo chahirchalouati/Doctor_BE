@@ -7,7 +7,9 @@ package Doctor.Utilities.Projections;
 
 import Doctor.Entities.AppUser;
 import Doctor.Entities.PatientDetails;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,10 +17,11 @@ import org.springframework.stereotype.Component;
  * @author Chahir Chalouati
  */
 @Component
-public interface PatientProfilePro {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class PatientProfilePro {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    void setAppUser(AppUser user);
-
-    void setPatientDetails(PatientDetails patientDetails);
+    AppUser user;
+    PatientDetails patientDetails;
 }
